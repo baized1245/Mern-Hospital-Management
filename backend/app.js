@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
 import { dbConnection } from "./database/dbConnection.js";
 import messageRouter from "./router/messageRouter.js";
+import { errorMiddleware } from "./middlewares/errorMiddleware.js";
 
 const app = express();
 config({ path: "./config/config.env" });
@@ -28,12 +29,18 @@ app.use(
   })
 );
 
+// root
 app.get("/", (req, res) => {
   res.send("Hey Sinamika");
 });
 
+// application routes using
 app.use("/api/v1/message", messageRouter);
 
+//db connection
 dbConnection();
+
+//error middle using
+app.use(errorMiddleware);
 
 export default app;
