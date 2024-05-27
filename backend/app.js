@@ -1,10 +1,10 @@
 import express from "express";
 import cors from "cors";
-
 import { config } from "dotenv";
 import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
 import { dbConnection } from "./database/dbConnection.js";
+import messageRouter from "./router/messageRouter.js";
 
 const app = express();
 config({ path: "./config/config.env" });
@@ -27,6 +27,12 @@ app.use(
     tempFileDir: "/tmp/",
   })
 );
+
+app.get("/", (req, res) => {
+  res.send("Hey Sinamika");
+});
+
+app.use("/api/v1/message", messageRouter);
 
 dbConnection();
 
